@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const { listBooks, getBook, createBook, updateBook, deleteBook, getCategories } = require('../controllers/booksController');
+const { authenticate, authorize } = require('../middleware/auth');
+router.get('/', listBooks);
+router.get('/categories', getCategories);
+router.get('/:id', getBook);
+router.post('/', authenticate, authorize('admin','librarian'), createBook);
+router.put('/:id', authenticate, authorize('admin','librarian'), updateBook);
+router.delete('/:id', authenticate, authorize('admin'), deleteBook);
+module.exports = router;
