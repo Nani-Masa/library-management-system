@@ -32,11 +32,12 @@ app.use(cors({
   origin: function(origin, callback) {
     const allowedOrigins = [
       process.env.FRONTEND_URL,
-      'https://libraryos-gcpzf21mi-nani-masas-projects.vercel.app',
-      'https://libraryos-three.vercel.app',
       'http://localhost:3000'
     ];
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow any Vercel deployment URL for this project
+    if (!origin || allowedOrigins.includes(origin) || 
+        origin.match(/https:\/\/libraryos-.*-nani-masas-projects\.vercel\.app/) ||
+        origin === 'https://libraryos-three.vercel.app') {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
